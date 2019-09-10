@@ -3,9 +3,9 @@ import java.util.Random;
 
 public class Zork
 {
-    static enum LandMark
+    enum LandMark
     {
-        Default,
+        None,
         River,
         Mountain,
         Forest,
@@ -21,20 +21,20 @@ public class Zork
 
         GameConfig()
         {
-            maxX = 3;
-            maxY = 3;
+            maxX = 4;
+            maxY = 4;
 
-            minX = -3;
-            minY = -3;
+            minX = -4;
+            minY = -4;
         }
 
         private String[] impassableMessages =
-        {
-                "There are impassable mountains this way...",
-                "There is a deadly river this way...",
-                "This way is blocked by dark magic...",
-                "This path is on fire. You can't go through it..."
-        };
+                {
+                        "There are impassable mountains this way...",
+                        "There is a deadly river this way...",
+                        "This way is blocked by dark magic...",
+                        "This path is on fire. You can't go through it..."
+                };
     }
     static class PlayerData
     {
@@ -45,14 +45,14 @@ public class Zork
         private int x;
         private int y;
         private String position;
-        private Object playerLandmark;
+        private LandMark playerLandmark;
 
         PlayerData()
         {
             x = 0;
             y = 0;
             moves = 0;
-            playerLandmark = LandMark.Default;
+            playerLandmark = LandMark.None;
         }
 
         private String UpdateCoord()
@@ -126,6 +126,8 @@ public class Zork
         }
         Puts("Your new position is " + data.UpdateCoord());
         HandleCurrentPosition(false);
+        
+        Puts("Current Landmark: " + data.playerLandmark);
 
         return true;
     }
@@ -140,14 +142,48 @@ public class Zork
 
         if (data.x == 0 && data.y == 0)
         {
-            data.playerLandmark = LandMark.Default;
+            data.playerLandmark = LandMark.None;
         }
-
-        System.out.println(data.playerLandmark);
+        switch (data.x)
+        {
+            case -1:
+            case -2:
+                switch (data.y)
+                {
+                    case -1:
+                    case -2:
+                        data.playerLandmark = LandMark.House;
+                        break;
+                    case -4:
+                        data.playerLandmark = LandMark.River;
+                        break;
+                }
+            case -3:
+                switch (data.y)
+                {
+                    case -4:
+                        data.playerLandmark = LandMark.River;
+                }
+                break;
+            case -4:
+                switch (data.y)
+                {
+                    case -4:
+                        data.playerLandmark = LandMark.River;
+                }
+                break;
+            case 0:
+                switch (data.y)
+                {
+                    case -4:
+                        data.playerLandmark = LandMark.River;
+                }
+                break;
+        }
     }
+        // endregion
 
-    // endregion
-
-    private static void Puts(String output) { System.out.println(output); }
-
+        private static void Puts (String output){
+        System.out.println(output);
+    }
 }
