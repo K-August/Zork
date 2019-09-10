@@ -52,6 +52,7 @@ public class Zork
             x = 0;
             y = 0;
             moves = 0;
+            playerLandmark = LandMark.Default;
         }
 
         private String UpdateCoord()
