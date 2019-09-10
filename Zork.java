@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Random;
 
 public class Zork
 {
@@ -17,6 +18,14 @@ public class Zork
             minX = -3;
             minY = -3;
         }
+
+        private String[] impassableMessages =
+        {
+                "There are impassable mountains this way...",
+                "There is a deadly river this way...",
+                "This way is blocked by dark magic...",
+                "This path is on fire. You can't go through it..."
+        };
     }
     static class PlayerPosition
     {
@@ -38,16 +47,16 @@ public class Zork
 
     private static GameConfig config = new GameConfig();
     private static PlayerPosition pos = new PlayerPosition();
-
-    private static boolean wantsToPlay = true;
+    private static Random random = new Random();
 
 
     public static void main(String[] args)
     {
         Puts("Would you like to start the game? y = affirmative");
+
         Scanner inputHandler = new Scanner(System.in);
 
-        while (wantsToPlay == HandleInput(inputHandler.nextLine()))
+        while (HandleInput(inputHandler.nextLine()))
         {
             HandleInput((inputHandler.nextLine()));
         }
@@ -66,7 +75,7 @@ public class Zork
                 if (++pos.y > config.maxY)
                 {
                     pos.y = config.maxY;
-                    Puts("You can't go further North!");
+                    HandleCurrentPosition(true);
                     return true;
                 }
                 break;
@@ -74,7 +83,7 @@ public class Zork
                 if (--pos.y < config.minY)
                 {
                     pos.y = config.minY;
-                    Puts("You can't go any further South!");
+                    HandleCurrentPosition(true);
                     return true;
                 }
                 break;
@@ -82,7 +91,7 @@ public class Zork
                 if (++pos.x > config.maxX)
                 {
                     pos.x = 2;
-                    Puts("You can't go any further East!");
+                    HandleCurrentPosition(true);
                     return true;
                 }
                 break;
@@ -90,7 +99,7 @@ public class Zork
                 if (--pos.x < config.minX)
                 {
                     pos.x = config.minX;
-                    Puts("You can't go any further West!");
+                    HandleCurrentPosition(true);;
                     return true;
                 }
                 break;
@@ -107,9 +116,12 @@ public class Zork
         return true;
     }
 
-    private static void HandleCurrentPosition()
+    private static void HandleCurrentPosition(boolean isOOB)
     {
-
+        if (isOOB)
+        {
+            Puts(config.impassableMessages[random.nextInt(4)]);
+        }
     }
 
     // endregion
