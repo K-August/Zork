@@ -2,6 +2,22 @@ import java.util.Scanner;
 
 public class Zork
 {
+    static class GameConfig
+    {
+        private int maxX;
+        private int maxY;
+        private int minX;
+        private int minY;
+
+        GameConfig()
+        {
+            maxX = 3;
+            maxY = 3;
+
+            minX = -3;
+            minY = -3;
+        }
+    }
     static class PlayerPosition
     {
         private int x;
@@ -20,14 +36,11 @@ public class Zork
         }
     }
 
+    private static GameConfig config = new GameConfig();
     private static PlayerPosition pos = new PlayerPosition();
 
     private static boolean wantsToPlay = true;
 
-    private static int[] gameBoard =
-            {
-                    -2, -1, 0, 1, 2
-            };
 
     public static void main(String[] args)
     {
@@ -40,7 +53,7 @@ public class Zork
         }
     }
 
-    // region Postion Handler
+    // region Position Handler
 
     private static boolean HandleInput(String input)
     {
@@ -50,23 +63,23 @@ public class Zork
         switch (input)
         {
             case "n":
-                if (++pos.y > gameBoard[4])
+                if (++pos.y > config.maxY)
                 {
-                    pos.y = 2;
+                    pos.y = config.maxY;
                     Puts("You can't go further North!");
                     return true;
                 }
                 break;
             case "s":
-                if (--pos.y < gameBoard[0])
+                if (--pos.y < config.minY)
                 {
-                    pos.y = -2;
+                    pos.y = config.minY;
                     Puts("You can't go any further South!");
                     return true;
                 }
                 break;
             case "e":
-                if (++pos.x > gameBoard[4])
+                if (++pos.x > config.maxX)
                 {
                     pos.x = 2;
                     Puts("You can't go any further East!");
@@ -74,15 +87,18 @@ public class Zork
                 }
                 break;
             case "w":
-                if (++pos.x < gameBoard[0])
+                if (--pos.x < config.minX)
                 {
-                    pos.x = -2;
-                    Puts("You can't go any further West!");return true;
-
+                    pos.x = config.minX;
+                    Puts("You can't go any further West!");
+                    return true;
                 }
                 break;
+            case "y":
+                Puts("You are now playing the game");
+                break;
             default:
-                Puts("You can't go here!");
+                Puts("This command is unknown!");
                 return true;
 
         }
