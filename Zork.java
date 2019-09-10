@@ -27,16 +27,21 @@ public class Zork
                 "This path is on fire. You can't go through it..."
         };
     }
-    static class PlayerPosition
+    static class PlayerData
     {
+
+        private int moves;
+
+        // Position
         private int x;
         private int y;
         private String position;
 
-        PlayerPosition()
+        PlayerData()
         {
             x = 0;
             y = 0;
+            moves = 0;
         }
 
         private String UpdateCoord()
@@ -46,13 +51,13 @@ public class Zork
     }
 
     private static GameConfig config = new GameConfig();
-    private static PlayerPosition pos = new PlayerPosition();
+    private static PlayerData data = new PlayerData();
     private static Random random = new Random();
 
 
     public static void main(String[] args)
     {
-        Puts("Would you like to start the game? y = affirmative");
+        Puts("Welcome to the game. The controls are N, E, W, and S to move.");
 
         Scanner inputHandler = new Scanner(System.in);
 
@@ -72,46 +77,44 @@ public class Zork
         switch (input)
         {
             case "n":
-                if (++pos.y > config.maxY)
+                if (++data.y > config.maxY)
                 {
-                    pos.y = config.maxY;
+                    data.y = config.maxY;
                     HandleCurrentPosition(true);
                     return true;
                 }
                 break;
             case "s":
-                if (--pos.y < config.minY)
+                if (--data.y < config.minY)
                 {
-                    pos.y = config.minY;
+                    data.y = config.minY;
                     HandleCurrentPosition(true);
                     return true;
                 }
                 break;
             case "e":
-                if (++pos.x > config.maxX)
+                if (++data.x > config.maxX)
                 {
-                    pos.x = 2;
+                    data.x = 2;
                     HandleCurrentPosition(true);
                     return true;
                 }
                 break;
             case "w":
-                if (--pos.x < config.minX)
+                if (--data.x < config.minX)
                 {
-                    pos.x = config.minX;
+                    data.x = config.minX;
                     HandleCurrentPosition(true);;
                     return true;
                 }
-                break;
-            case "y":
-                Puts("You are now playing the game");
                 break;
             default:
                 Puts("This command is unknown!");
                 return true;
 
         }
-        Puts("Your new position is " + pos.UpdateCoord());
+        Puts("Your new position is " + data.UpdateCoord());
+        data.moves++;
 
         return true;
     }
@@ -122,13 +125,11 @@ public class Zork
         {
             Puts(config.impassableMessages[random.nextInt(4)]);
         }
+        data.moves++;
     }
 
     // endregion
 
-    private static void Puts(String output)
-    {
-        System.out.println(output);
-    }
+    private static void Puts(String output) { System.out.println(output); }
 
 }
