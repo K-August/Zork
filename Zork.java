@@ -3,6 +3,15 @@ import java.util.Random;
 
 public class Zork
 {
+    static enum LandMark
+    {
+        Default,
+        River,
+        Mountain,
+        Forest,
+        House,
+    }
+
     static class GameConfig
     {
         private int maxX;
@@ -36,6 +45,7 @@ public class Zork
         private int x;
         private int y;
         private String position;
+        private Object playerLandmark;
 
         PlayerData()
         {
@@ -114,7 +124,7 @@ public class Zork
 
         }
         Puts("Your new position is " + data.UpdateCoord());
-        data.moves++;
+        HandleCurrentPosition(false);
 
         return true;
     }
@@ -126,6 +136,13 @@ public class Zork
             Puts(config.impassableMessages[random.nextInt(4)]);
         }
         data.moves++;
+
+        if (data.x == 0 && data.y == 0)
+        {
+            data.playerLandmark = LandMark.Default;
+        }
+
+        System.out.println(data.playerLandmark);
     }
 
     // endregion
