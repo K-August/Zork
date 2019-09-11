@@ -11,7 +11,7 @@ public class Zork
 
     public static void main(String[] args)
     {
-        Puts("Welcome to the game. The controls are N, E, W, and S to move.");
+        System.out.println("Welcome to the game. The controls are N, E, W, and S to move.");
 
         Scanner inputHandler = new Scanner(System.in);
 
@@ -49,7 +49,7 @@ public class Zork
             case "e":
                 if (++data.x > config.maxX)
                 {
-                    data.x = 2;
+                    data.x = config.maxX;
                     HandleCurrentPosition(true);
                     return true;
                 }
@@ -67,10 +67,7 @@ public class Zork
                 return true;
 
         }
-        Puts("Your new position is " + data.UpdateCoord());
         HandleCurrentPosition(false);
-        
-        Puts("Current Landmark: " + data.playerLandmark);
 
         return true;
     }
@@ -80,6 +77,7 @@ public class Zork
         if (isOOB)
         {
             Puts(config.impassableMessages[random.nextInt(4)]);
+            return;
         }
         data.moves++;
 
@@ -123,10 +121,12 @@ public class Zork
                 }
                 break;
         }
+        Puts("Your current position is " + data.GetCoord() + ". - Landmark: " + data.playerLandmark);
     }
-        // endregion
+    // endregion
 
-        private static void Puts (String output){
-        System.out.println(output);
+    private static void Puts(String output)
+    {
+        System.out.print(output + "\n");
     }
 }
