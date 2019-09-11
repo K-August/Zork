@@ -1,66 +1,9 @@
 import java.util.Scanner;
 import java.util.Random;
+import Utilities.Core.*;
 
 public class Zork
 {
-    enum LandMark
-    {
-        None,
-        River,
-        Mountain,
-        Forest,
-        House,
-    }
-
-    static class GameConfig
-    {
-        private int maxX;
-        private int maxY;
-        private int minX;
-        private int minY;
-
-        GameConfig()
-        {
-            maxX = 4;
-            maxY = 4;
-
-            minX = -4;
-            minY = -4;
-        }
-
-        private String[] impassableMessages =
-                {
-                        "There are impassable mountains this way...",
-                        "There is a deadly river this way...",
-                        "This way is blocked by dark magic...",
-                        "This path is on fire. You can't go through it..."
-                };
-    }
-    static class PlayerData
-    {
-
-        private int moves;
-
-        // Position
-        private int x;
-        private int y;
-        private String position;
-        private LandMark playerLandmark;
-
-        PlayerData()
-        {
-            x = 0;
-            y = 0;
-            moves = 0;
-            playerLandmark = LandMark.None;
-        }
-
-        private String UpdateCoord()
-        {
-            return position = String.format("(%s, %s)", this.x, this.y);
-        }
-    }
-
     private static GameConfig config = new GameConfig();
     private static PlayerData data = new PlayerData();
     private static Random random = new Random();
