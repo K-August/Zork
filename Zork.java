@@ -1,12 +1,17 @@
 import java.util.Scanner;
 import java.util.Random;
 import Utilities.Core.*;
+import Utilities.Interaction;
 
 public class Zork
 {
+    // region Fields
+
     private static GameConfig config = new GameConfig();
     private static PlayerData data = new PlayerData();
     private static Random random = new Random();
+
+    // endregion
 
     public static void main(String[] args)
     {
@@ -61,6 +66,16 @@ public class Zork
                     return true;
                 }
                 break;
+            case "swim":
+                if (data.playerLandmark != LandMark.River)
+                {
+                    Puts("You can't swim here, idiot!");
+                }
+                else
+                {
+                    Puts("You increased your swimming skill to " + ++data.swim + "!");
+                }
+                return true;
             default:
                 Puts("This command is unknown!");
                 return true;
@@ -81,7 +96,7 @@ public class Zork
 
         data.moves++;
 
-        Puts("Your current position is " + data.GetCoord() + ". - Landmark: " + data.GetLandmark(config));
+        Puts("Your current position is " + data.GetCoord() + ". - Landmark: " + data.GetLandmark(config) + " - Moves: " + data.moves);
     }
 
     public static void Puts(String output)
