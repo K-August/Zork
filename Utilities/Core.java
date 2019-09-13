@@ -40,11 +40,20 @@ public class Core
     public static class PlayerData
     {
 
+        public int swim = 0;
+        public int climb = 0;
+        public int sell = 0;
+        public int chopwood = 0;
+        public int loot = 0;
+        public int drink = 0;
+
         public int moves;
+        public int points;
 
         // Position
         public int x;
         public int y;
+
         private String position;
         public LandMark playerLandmark;
 
@@ -52,6 +61,7 @@ public class Core
         {
             x = 0;
             y = 0;
+            points = 0;
             moves = 0;
             playerLandmark = LandMark.Path;
         }
@@ -125,3 +135,5 @@ public class Core
         }
     }
 }
+
+
