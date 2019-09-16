@@ -42,10 +42,10 @@ public class Core
 
         public int swim = 0;
         public int climb = 0;
-        public int sell = 0;
         public int chopwood = 0;
         public int loot = 0;
         public int drink = 0;
+        public int running = 0;
 
         public int moves;
         public int points;
@@ -128,10 +128,50 @@ public class Core
             return this.playerLandmark;
         }
 
+        public void UpdateSkill(String skill)
+        {
+            switch (skill)
+            {
+                case "swim":
+                    if (this.playerLandmark != LandMark.River)
+                        Puts("You can't swim here, idiot!");
+                    else
+                        Puts("You upgraded your swimming skill to " + ++this.swim + "!");
+                    break;
+                case "loot":
+                    if (this.playerLandmark != LandMark.House)
+                        Puts("You can't loot here, idiot!");
+                    else
+                        Puts("You upgraded your swimming skill to " + ++this.loot + "!");
+                    break;
+                case "chop wood":
+                    if (this.playerLandmark != LandMark.Forest)
+                        Puts("You can't chop wood here, idiot!");
+                    else
+                        Puts("You upgraded your swimming skill to " + ++this.chopwood + "!");
+                    break;
+                case "climb":
+                    if (this.playerLandmark != LandMark.Mountain)
+                        Puts("You can't loot here, idiot!");
+                    else
+                        Puts("You upgraded your swimming skill to " + ++this.climb + "!");
+                    break;
+                case "cardio":
+                case "jog":
+                case "run":
+                    if (this.playerLandmark == LandMark.Path || this.playerLandmark == LandMark.Clearing)
+                        Puts("You upgraded your swimming skill to " + ++this.running + "!");
+            }
+        }
 
         public String GetCoord()
         {
             return position = String.format("(%s, %s)", this.x, this.y);
+        }
+
+        private void Puts(String output)
+        {
+            System.out.print(output + "\n");
         }
     }
 }
