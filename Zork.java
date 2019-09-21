@@ -1,7 +1,6 @@
 import java.util.Scanner;
 import java.util.Random;
 import Utilities.Core.*;
-import Utilities.Interaction;
 
 public class Zork
 {
@@ -67,14 +66,16 @@ public class Zork
                 }
                 break;
             case "swim":
-                if (data.playerLandmark != LandMark.River)
-                {
-                    Puts("You can't swim here, idiot!");
-                }
-                else
-                {
-                    Puts("You increased your swimming skill to " + ++data.swim + "!");
-                }
+                data.UpdateSkill("swim");
+                return true;
+            case "loot":
+                data.UpdateSkill("loot");
+                return true;
+            case "jog":
+                data.UpdateSkill("jog");
+                return true;
+            case "climb":
+                data.UpdateSkill("climb");
                 return true;
             default:
                 Puts("This command is unknown!");
